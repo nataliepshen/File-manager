@@ -1,0 +1,7 @@
+{
+    "name": "file-manager",
+    "type": "module",
+    "scripts": {
+        "start": "npm run start -- --username=your_username"
+    }
+}
