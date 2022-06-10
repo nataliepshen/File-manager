@@ -1,7 +1,8 @@
 {
     "name": "file-manager",
+    "main": "main.js",
     "type": "module",
     "scripts": {
-        "start": "npm run start -- --username=your_username"
+        "start": "node main"
     }
 }
