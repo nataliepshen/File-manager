@@ -1,6 +1,7 @@
 import * as readline from 'readline';
 import * as os from 'os';
 import { actions } from './actions.js';
+import { userName } from './main.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -16,6 +17,7 @@ export const initialization = () => {
         async (action) => {
             action = action.trim();
             if (action === '.exit') {
+                console.log(`Thank you for using File Manager, ${userName}!`)
                 process.exit(0);
             }
             try {
@@ -27,12 +29,16 @@ export const initialization = () => {
                 if (result && result.currentDir !== pathToCurrentDir && result.currentDir) {
                     pathToCurrentDir = result.currentDir;
                 }
-                console.log(result);
+                console.log(result.data);
             } catch(error) {
                 console.log(error.message);
             }
             initialization();
         }
     )
-}
-initialization();
+    
+};
+rl.on('SIGINT', () => {
+    console.log(`Thank you for using File Manager, ${userName}!`);
+    rl.close();
+});

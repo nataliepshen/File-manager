@@ -1,15 +1,11 @@
 import { createReadStream, createWriteStream } from 'fs';
-import * as path from 'path';
+import { createBrotliDecompress } from 'zlib';
 import { pipeline } from 'stream/promises';
 import { absFilePath } from '../helpers/absPath.js';
-import { stat } from 'fs/promises';
 
-export const copy = async (currentDir, [pathToFile, pathToNewDir]) => {
+export const decompress = async (currentDir, [pathToFile, pathToDestination]) => {
     const filePath = absFilePath(currentDir, pathToFile);
-    const dirPath = absFilePath(currentDir, pathToNewDir);
-
-    const fileName = path.basename(filePath);
-    const copyFilePath = path.join(dirPath, fileName);
+    const destFilePath = absFilePath(currentDir, pathToDestination);
     
     try {
         const stats = await stat(filePath);
@@ -17,8 +13,9 @@ export const copy = async (currentDir, [pathToFile, pathToNewDir]) => {
             throw new Error('Operation failed');
         }
         const readStream = createReadStream(filePath);
-        const writeStream = createWriteStream(copyFilePath, { flags: 'wx' });
-        await pipeline(readStream, writeStream);
+        const writeStream = createWriteStream(destFilePath, { flags: 'wx' });
+        const brotliCompress = createBrotliDecompress();
+        await pipeline(readStream, brotliCompress, writeStream);
     } catch(error) {
         throw new Error('Operation failed');
     }

@@ -5,6 +5,9 @@ import { absFilePath } from '../helpers/absPath.js';
 export const rn = async (currentDir, [pathToFile, newFileName]) => {
     try {
         let oldFilePath = absFilePath(currentDir, pathToFile);
+        if (path.basename(newFileName) !== newFileName) {
+            throw new Error;
+        }
         let newFilePath = path.join(path.dirname(oldFilePath), newFileName);
         try {
             await access(newFilePath);

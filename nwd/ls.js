@@ -2,7 +2,7 @@ import { readdir } from 'fs/promises';
 
 export const list = async (currentDir, [args]) => {
     if (args != undefined) {
-        throw new Error('Invalid input');
+        throw new Error('Operation failed');
     }
     try {
         const dirContent = await readdir(currentDir);
@@ -10,7 +10,8 @@ export const list = async (currentDir, [args]) => {
         for (let item of dirContent) {
             arrayOfContent.push(item);
         }
-        console.table(arrayOfContent);
+        const data = arrayOfContent;
+        return { data };
     } catch(err) {
         throw new Error('Operation failed');
     }

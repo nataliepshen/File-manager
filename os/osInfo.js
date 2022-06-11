@@ -12,11 +12,12 @@ export const getOsInfo = (currentDir, [args]) => {
             for (let core of cpuCores) {
                 let coreObj = {
                     model: core.model,
-                    speed: core.speed
+                    speed: +((core.speed / 1000).toFixed(1))
                 }
                 modelOfCores.push(coreObj);
             }
-            return modelOfCores;
+            const data = modelOfCores;
+            return { data };
         case 'homedir':
             return os.homedir();
         case 'username':
