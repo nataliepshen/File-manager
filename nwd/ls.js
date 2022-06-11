@@ -14,4 +14,4 @@ export const list = async (currentDir, [args]) => {
     } catch(err) {
         throw new Error('Operation failed');
     }
-}
+};

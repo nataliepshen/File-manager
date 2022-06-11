@@ -1,15 +1,10 @@
 import { rename, stat, access } from 'fs/promises';
 import * as path from 'path';
+import { absFilePath } from '../helpers/absPath.js';
 
 export const rn = async (currentDir, [pathToFile, newFileName]) => {
     try {
-        let oldFilePath = '';
-        if (path.isAbsolute(pathToFile)) {
-            oldFilePath = pathToFile;
-        }
-        else {
-            oldFilePath = path.join(currentDir, pathToFile);
-        }
+        let oldFilePath = absFilePath(currentDir, pathToFile);
         let newFilePath = path.join(path.dirname(oldFilePath), newFileName);
         try {
             await access(newFilePath);
@@ -27,4 +22,4 @@ export const rn = async (currentDir, [pathToFile, newFileName]) => {
     } catch (error) {
         throw new Error('Operation failed');
     }
-}
+};

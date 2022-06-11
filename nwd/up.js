@@ -9,4 +9,4 @@ export const up = async (currentDir, []) => {
         currentDir = path.dirname(currentDir);
         return { currentDir };
     }
-}
+};

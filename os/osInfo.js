@@ -26,4 +26,4 @@ export const getOsInfo = (currentDir, [args]) => {
         default:
             throw new Error('Invalid input');
     }
-}
+};
