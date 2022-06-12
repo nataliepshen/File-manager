@@ -7,7 +7,6 @@ import { stat } from 'fs/promises';
 export const copy = async (currentDir, [pathToFile, pathToNewDir]) => {
     const filePath = absFilePath(currentDir, pathToFile);
     const dirPath = absFilePath(currentDir, pathToNewDir);
-
     const fileName = path.basename(filePath);
     const copyFilePath = path.join(dirPath, fileName);
     

@@ -5,7 +5,8 @@ export const getOsInfo = (currentDir, [args]) => {
     switch (osProperty) {
         case 'EOL':
             const osEOL = os.EOL;
-            return JSON.stringify(osEOL);
+            console.log(JSON.stringify(osEOL));
+            break;
         case 'cpus':
             const cpuCores = os.cpus();
             const modelOfCores = [];
@@ -16,14 +17,18 @@ export const getOsInfo = (currentDir, [args]) => {
                 }
                 modelOfCores.push(coreObj);
             }
-            const data = modelOfCores;
-            return { data };
+            console.log(`Overall amount of CPUs: ${cpuCores.length}`);
+            console.table(modelOfCores);
+            break;
         case 'homedir':
-            return os.homedir();
+            console.log(os.homedir());
+            break;
         case 'username':
-            return os.userInfo().username;
+            console.log(os.userInfo().username);
+            break;
         case 'architecture':
-            return os.arch();
+            console.log(os.arch());
+            break;
         default:
             throw new Error('Invalid input');
     }

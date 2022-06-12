@@ -10,8 +10,7 @@ export const list = async (currentDir, [args]) => {
         for (let item of dirContent) {
             arrayOfContent.push(item);
         }
-        const data = arrayOfContent;
-        return { data };
+        console.table(arrayOfContent);
     } catch(err) {
         throw new Error('Operation failed');
     }

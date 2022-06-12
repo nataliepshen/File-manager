@@ -1,7 +1,6 @@
 import * as readline from 'readline';
 import * as os from 'os';
 import { actions } from './actions.js';
-import { userName } from './main.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -11,34 +10,28 @@ const rl = readline.createInterface({
 let pathToCurrentDir = os.homedir();
 let EOL = os.EOL;
 
-export const initialization = () => {
+export const performOperation = () => {
     rl.question(
         `You are currently in ${pathToCurrentDir}${EOL}`,
         async (action) => {
             action = action.trim();
             if (action === '.exit') {
-                console.log(`Thank you for using File Manager, ${userName}!`)
-                process.exit(0);
+                process.exit();
             }
             try {
                 const [command, ...args] = action.split(' ');
+                console.log(args);
                 if (!actions[command]) {
                     throw new Error('Invalid input');
                 }
                 const result = await actions[command](pathToCurrentDir, args);
-                if (result && result.currentDir !== pathToCurrentDir && result.currentDir) {
+                if (result && result.currentDir && result.currentDir !== pathToCurrentDir) {
                     pathToCurrentDir = result.currentDir;
                 }
-                console.log(result.data);
             } catch(error) {
                 console.log(error.message);
             }
-            initialization();
+            performOperation();
         }
     )
-    
 };
-rl.on('SIGINT', () => {
-    console.log(`Thank you for using File Manager, ${userName}!`);
-    rl.close();
-});
