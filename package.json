@@ -1,0 +1,8 @@
+{
+    "name": "file-manager",
+    "main": "main.js",
+    "type": "module",
+    "scripts": {
+        "start": "node main"
+    }
+}
