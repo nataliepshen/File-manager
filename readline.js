@@ -1,6 +1,7 @@
 import * as readline from 'readline';
 import * as os from 'os';
 import { actions } from './actions.js';
+import { parseArgs } from './helpers/parseArgs.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -19,12 +20,14 @@ export const performOperation = () => {
                 process.exit();
             }
             try {
-                const [command, ...args] = action.split(' ');
+                let [command, ...args] = action.split(' ');
+                console.log(args);
+                args = parseArgs(args);
                 console.log(args);
                 if (!actions[command]) {
                     throw new Error('Invalid input');
                 }
-                const result = await actions[command](pathToCurrentDir, args);
+                const result = await actions[command](pathToCurrentDir, args[0].join(' '), args[1].join(' '));
                 if (result && result.currentDir && result.currentDir !== pathToCurrentDir) {
                     pathToCurrentDir = result.currentDir;
                 }
